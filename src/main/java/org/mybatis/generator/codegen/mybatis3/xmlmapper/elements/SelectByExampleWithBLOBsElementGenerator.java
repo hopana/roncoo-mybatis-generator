@@ -15,19 +15,16 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class SelectByExampleWithBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SelectByExampleWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public SelectByExampleWithBLOBsElementGenerator() {
         super();
@@ -38,11 +35,8 @@ public class SelectByExampleWithBLOBsElementGenerator extends
         String fqjt = introspectedTable.getExampleType();
 
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
-        answer
-                .addAttribute(new Attribute(
-                        "id", introspectedTable.getSelectByExampleWithBLOBsStatementId())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute(
-                "resultMap", introspectedTable.getResultMapWithBLOBsId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getSelectByExampleWithBLOBsStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("resultMap", introspectedTable.getResultMapWithBLOBsId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
@@ -54,8 +48,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
         answer.addElement(ifElement);
 
         StringBuilder sb = new StringBuilder();
-        if (stringHasValue(introspectedTable
-                .getSelectByExampleQueryId())) {
+        if (stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
             sb.append('\'');
             sb.append(introspectedTable.getSelectByExampleQueryId());
             sb.append("' as QUERYID,"); //$NON-NLS-1$
@@ -68,8 +61,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
         answer.addElement(getExampleIncludeElement());
 
@@ -78,9 +70,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
         ifElement.addElement(new TextElement("order by ${orderByClause}")); //$NON-NLS-1$
         answer.addElement(ifElement);
 
-        if (context.getPlugins()
-                .sqlMapSelectByExampleWithBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

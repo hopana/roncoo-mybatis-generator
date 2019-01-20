@@ -15,9 +15,6 @@
  */
 package org.mybatis.generator.codegen.ibatis2.dao.elements;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 import org.mybatis.generator.api.DAOMethodNameCalculator;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -29,8 +26,10 @@ import org.mybatis.generator.internal.DefaultDAOMethodNameCalculator;
 import org.mybatis.generator.internal.ExtendedDAOMethodNameCalculator;
 import org.mybatis.generator.internal.ObjectFactory;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 /**
- * 
  * @author Jeff Butler
  */
 public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
@@ -52,8 +51,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
 
     public DAOMethodNameCalculator getDAOMethodNameCalculator() {
         if (dAOMethodNameCalculator == null) {
-            String type = context.getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
+            String type = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
             if (stringHasValue(type)) {
                 if ("extended".equalsIgnoreCase(type)) { //$NON-NLS-1$
                     type = ExtendedDAOMethodNameCalculator.class.getName();
@@ -65,12 +63,10 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
             }
 
             try {
-                dAOMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory
-                        .createInternalObject(type);
+                dAOMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory.createInternalObject(type);
             } catch (Exception e) {
                 dAOMethodNameCalculator = new DefaultDAOMethodNameCalculator();
-                warnings.add(getString(
-                        "Warning.17", type, e.getMessage())); //$NON-NLS-1$
+                warnings.add(getString("Warning.17", type, e.getMessage())); //$NON-NLS-1$
             }
         }
 
@@ -79,9 +75,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
 
     public JavaVisibility getExampleMethodVisibility() {
         if (exampleMethodVisibility == null) {
-            String type = context
-                    .getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
+            String type = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
             if (stringHasValue(type)) {
                 if ("public".equalsIgnoreCase(type)) { //$NON-NLS-1$
                     exampleMethodVisibility = JavaVisibility.PUBLIC;

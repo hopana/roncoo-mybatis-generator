@@ -15,24 +15,21 @@
  */
 package org.mybatis.generator.config;
 
-import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
-import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
-import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
-import static org.mybatis.generator.internal.util.StringUtility.isTrue;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
+import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
+import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
+import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
+import static org.mybatis.generator.internal.util.StringUtility.*;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
- * 
  * @author Jeff Butler
  */
 public class TableConfiguration extends PropertyHolder {
@@ -97,8 +94,7 @@ public class TableConfiguration extends PropertyHolder {
         return deleteByPrimaryKeyStatementEnabled;
     }
 
-    public void setDeleteByPrimaryKeyStatementEnabled(
-            boolean deleteByPrimaryKeyStatementEnabled) {
+    public void setDeleteByPrimaryKeyStatementEnabled(boolean deleteByPrimaryKeyStatementEnabled) {
         this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;
     }
 
@@ -114,8 +110,7 @@ public class TableConfiguration extends PropertyHolder {
         return selectByPrimaryKeyStatementEnabled;
     }
 
-    public void setSelectByPrimaryKeyStatementEnabled(
-            boolean selectByPrimaryKeyStatementEnabled) {
+    public void setSelectByPrimaryKeyStatementEnabled(boolean selectByPrimaryKeyStatementEnabled) {
         this.selectByPrimaryKeyStatementEnabled = selectByPrimaryKeyStatementEnabled;
     }
 
@@ -123,14 +118,12 @@ public class TableConfiguration extends PropertyHolder {
         return updateByPrimaryKeyStatementEnabled;
     }
 
-    public void setUpdateByPrimaryKeyStatementEnabled(
-            boolean updateByPrimaryKeyStatementEnabled) {
+    public void setUpdateByPrimaryKeyStatementEnabled(boolean updateByPrimaryKeyStatementEnabled) {
         this.updateByPrimaryKeyStatementEnabled = updateByPrimaryKeyStatementEnabled;
     }
 
     public boolean isColumnIgnored(String columnName) {
-        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
-                .entrySet()) {
+        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
             IgnoredColumn ic = entry.getKey();
             if (ic.isColumnNameDelimited()) {
                 if (columnName.equals(ic.getColumnName())) {
@@ -168,9 +161,7 @@ public class TableConfiguration extends PropertyHolder {
 
         TableConfiguration other = (TableConfiguration) obj;
 
-        return areEqual(this.catalog, other.catalog)
-                && areEqual(this.schema, other.schema)
-                && areEqual(this.tableName, other.tableName);
+        return areEqual(this.catalog, other.catalog) && areEqual(this.schema, other.schema) && areEqual(this.tableName, other.tableName);
     }
 
     @Override
@@ -187,14 +178,13 @@ public class TableConfiguration extends PropertyHolder {
         return selectByExampleStatementEnabled;
     }
 
-    public void setSelectByExampleStatementEnabled(
-            boolean selectByExampleStatementEnabled) {
+    public void setSelectByExampleStatementEnabled(boolean selectByExampleStatementEnabled) {
         this.selectByExampleStatementEnabled = selectByExampleStatementEnabled;
     }
 
     /**
      * May return null if the column has not been overridden
-     * 
+     *
      * @param columnName
      * @return the column override (if any) related to this column
      */
@@ -238,19 +228,12 @@ public class TableConfiguration extends PropertyHolder {
         return deleteByExampleStatementEnabled;
     }
 
-    public void setDeleteByExampleStatementEnabled(
-            boolean deleteByExampleStatementEnabled) {
+    public void setDeleteByExampleStatementEnabled(boolean deleteByExampleStatementEnabled) {
         this.deleteByExampleStatementEnabled = deleteByExampleStatementEnabled;
     }
 
     public boolean areAnyStatementsEnabled() {
-        return selectByExampleStatementEnabled
-                || selectByPrimaryKeyStatementEnabled || insertStatementEnabled
-                || updateByPrimaryKeyStatementEnabled
-                || deleteByExampleStatementEnabled
-                || deleteByPrimaryKeyStatementEnabled
-                || countByExampleStatementEnabled
-                || updateByExampleStatementEnabled;
+        return selectByExampleStatementEnabled || selectByPrimaryKeyStatementEnabled || insertStatementEnabled || updateByPrimaryKeyStatementEnabled || deleteByExampleStatementEnabled || deleteByPrimaryKeyStatementEnabled || countByExampleStatementEnabled || updateByExampleStatementEnabled;
     }
 
     public void setGeneratedKey(GeneratedKey generatedKey) {
@@ -305,15 +288,14 @@ public class TableConfiguration extends PropertyHolder {
      * This method returns an iterator of Strings. The values are the columns
      * that were specified to be ignored in the table, but do not exist in the
      * table.
-     * 
+     *
      * @return an List of Strings - the columns that were improperly configured
-     *         as ignored columns
+     * as ignored columns
      */
     public List<String> getIgnoredColumnsInError() {
         List<String> answer = new ArrayList<String>();
 
-        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
-                .entrySet()) {
+        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
             if (Boolean.FALSE.equals(entry.getValue())) {
                 answer.add(entry.getKey().getColumnName());
             }
@@ -356,8 +338,7 @@ public class TableConfiguration extends PropertyHolder {
         }
 
         if (stringHasValue(domainObjectName)) {
-            xmlElement.addAttribute(new Attribute(
-                    "domainObjectName", domainObjectName)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("domainObjectName", domainObjectName)); //$NON-NLS-1$
         }
 
         if (!insertStatementEnabled) {
@@ -365,53 +346,43 @@ public class TableConfiguration extends PropertyHolder {
         }
 
         if (!selectByPrimaryKeyStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableSelectByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableSelectByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (!selectByExampleStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableSelectByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableSelectByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (!updateByPrimaryKeyStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableUpdateByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableUpdateByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (!deleteByPrimaryKeyStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableDeleteByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableDeleteByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (!deleteByExampleStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableDeleteByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableDeleteByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (!countByExampleStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableCountByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableCountByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (!updateByExampleStatementEnabled) {
-            xmlElement.addAttribute(new Attribute(
-                    "enableUpdateByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("enableUpdateByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (stringHasValue(selectByPrimaryKeyQueryId)) {
-            xmlElement.addAttribute(new Attribute(
-                    "selectByPrimaryKeyQueryId", selectByPrimaryKeyQueryId)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("selectByPrimaryKeyQueryId", selectByPrimaryKeyQueryId)); //$NON-NLS-1$
         }
 
         if (stringHasValue(selectByExampleQueryId)) {
-            xmlElement.addAttribute(new Attribute(
-                    "selectByExampleQueryId", selectByExampleQueryId)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("selectByExampleQueryId", selectByExampleQueryId)); //$NON-NLS-1$
         }
 
         if (configuredModelType != null) {
-            xmlElement.addAttribute(new Attribute(
-                    "modelType", configuredModelType)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("modelType", configuredModelType)); //$NON-NLS-1$
         }
 
         if (wildcardEscapingEnabled) {
@@ -423,8 +394,7 @@ public class TableConfiguration extends PropertyHolder {
         }
 
         if (delimitIdentifiers) {
-            xmlElement
-                    .addAttribute(new Attribute("delimitIdentifiers", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+            xmlElement.addAttribute(new Attribute("delimitIdentifiers", "true")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         addPropertyXmlElements(xmlElement);
@@ -454,8 +424,7 @@ public class TableConfiguration extends PropertyHolder {
 
     @Override
     public String toString() {
-        return composeFullyQualifiedTableName(catalog, schema,
-                tableName, '.');
+        return composeFullyQualifiedTableName(catalog, schema, tableName, '.');
     }
 
     public boolean isDelimitIdentifiers() {
@@ -470,8 +439,7 @@ public class TableConfiguration extends PropertyHolder {
         return countByExampleStatementEnabled;
     }
 
-    public void setCountByExampleStatementEnabled(
-            boolean countByExampleStatementEnabled) {
+    public void setCountByExampleStatementEnabled(boolean countByExampleStatementEnabled) {
         this.countByExampleStatementEnabled = countByExampleStatementEnabled;
     }
 
@@ -479,19 +447,16 @@ public class TableConfiguration extends PropertyHolder {
         return updateByExampleStatementEnabled;
     }
 
-    public void setUpdateByExampleStatementEnabled(
-            boolean updateByExampleStatementEnabled) {
+    public void setUpdateByExampleStatementEnabled(boolean updateByExampleStatementEnabled) {
         this.updateByExampleStatementEnabled = updateByExampleStatementEnabled;
     }
 
     public void validate(List<String> errors, int listPosition) {
         if (!stringHasValue(tableName)) {
-            errors.add(getString(
-                    "ValidationError.6", Integer.toString(listPosition))); //$NON-NLS-1$
+            errors.add(getString("ValidationError.6", Integer.toString(listPosition))); //$NON-NLS-1$
         }
 
-        String fqTableName = composeFullyQualifiedTableName(
-                catalog, schema, tableName, '.');
+        String fqTableName = composeFullyQualifiedTableName(catalog, schema, tableName, '.');
 
         if (generatedKey != null) {
             generatedKey.validate(errors, fqTableName);
@@ -500,8 +465,7 @@ public class TableConfiguration extends PropertyHolder {
         if (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))) {
             // when using column indexes, either both or neither query ids
             // should be set
-            if (selectByExampleStatementEnabled
-                    && selectByPrimaryKeyStatementEnabled) {
+            if (selectByExampleStatementEnabled && selectByPrimaryKeyStatementEnabled) {
                 boolean queryId1Set = stringHasValue(selectByExampleQueryId);
                 boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);
 
@@ -537,8 +501,7 @@ public class TableConfiguration extends PropertyHolder {
         return isAllColumnDelimitingEnabled;
     }
 
-    public void setAllColumnDelimitingEnabled(
-            boolean isAllColumnDelimitingEnabled) {
+    public void setAllColumnDelimitingEnabled(boolean isAllColumnDelimitingEnabled) {
         this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
     }
 }

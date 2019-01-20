@@ -16,19 +16,14 @@
 
 package org.mybatis.generator.api.dom.java;
 
+import java.util.*;
+
 import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
 import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
  * @author Jeff Butler
- * 
  */
 public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     private Set<FullyQualifiedJavaType> importedTypes;
@@ -55,8 +50,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
             newLine(sb);
         }
 
-        if (getType().getPackageName() != null
-                && getType().getPackageName().length() > 0) {
+        if (getType().getPackageName() != null && getType().getPackageName().length() > 0) {
             sb.append("package "); //$NON-NLS-1$
             sb.append(getType().getPackageName());
             sb.append(';');
@@ -70,11 +64,11 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
             sb.append(';');
             newLine(sb);
         }
-        
+
         if (staticImports.size() > 0) {
             newLine(sb);
         }
-        
+
         Set<String> importStrings = calculateImports(importedTypes);
         for (String importString : importStrings) {
             sb.append(importString);
@@ -107,9 +101,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     }
 
     public void addImportedType(FullyQualifiedJavaType importedType) {
-        if (importedType.isExplicitlyImported()
-                && !importedType.getPackageName().equals(
-                        getType().getPackageName())) {
+        if (importedType.isExplicitlyImported() && !importedType.getPackageName().equals(getType().getPackageName())) {
             importedTypes.add(importedType);
         }
     }

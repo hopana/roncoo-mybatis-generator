@@ -15,12 +15,6 @@
  */
 package org.mybatis.generator.plugins;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
@@ -33,15 +27,17 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
+import java.util.*;
+
 /**
  * This plugin will add selectByExample methods that include rowBounds
  * parameters to the generated mapper interface.  This plugin is only
  * valid for MyBatis3.
- * 
+ *
  * @author Jeff Butler
  */
 public class RowBoundsPlugin extends PluginAdapter {
-    
+
     private FullyQualifiedJavaType rowBounds;
     private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd;
 
@@ -49,14 +45,13 @@ public class RowBoundsPlugin extends PluginAdapter {
         rowBounds = new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"); //$NON-NLS-1$
         elementsToAdd = new HashMap<FullyQualifiedTable, List<XmlElement>>();
     }
-    
+
     public boolean validate(List<String> warnings) {
         return true;
     }
 
     @Override
-    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
-            Interface interfaze, IntrospectedTable introspectedTable) {
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             copyAndAddMethod(method, interfaze);
         }
@@ -64,9 +59,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
-            Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             copyAndAddMethod(method, interfaze);
         }
@@ -74,8 +67,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
-            XmlElement element, IntrospectedTable introspectedTable) {
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
@@ -83,8 +75,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(
-            XmlElement element, IntrospectedTable introspectedTable) {
+    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
@@ -96,8 +87,7 @@ public class RowBoundsPlugin extends PluginAdapter {
      * previous calls
      */
     @Override
-    public boolean sqlMapDocumentGenerated(Document document,
-            IntrospectedTable introspectedTable) {
+    public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
         List<XmlElement> elements = elementsToAdd.get(introspectedTable.getFullyQualifiedTable());
         if (elements != null) {
             for (XmlElement element : elements) {
@@ -107,11 +97,11 @@ public class RowBoundsPlugin extends PluginAdapter {
 
         return true;
     }
-    
+
     /**
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
-     * 
+     *
      * @param fullyQualifiedTable
      * @param method
      */
@@ -125,15 +115,15 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     /**
      * Use the method copy constructor to create a new element
-     * 
+     *
      * @param fullyQualifiedTable
      * @param method
      */
     private void copyAndSaveElement(XmlElement element, FullyQualifiedTable fqt) {
         XmlElement newElement = new XmlElement(element);
-            
+
         // remove old id attribute and add a new one with the new name
-        for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext();) {
+        for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext(); ) {
             Attribute attribute = iterator.next();
             if ("id".equals(attribute.getName())) { //$NON-NLS-1$
                 iterator.remove();
@@ -142,7 +132,7 @@ public class RowBoundsPlugin extends PluginAdapter {
                 break;
             }
         }
-            
+
         // save the new element locally.   We'll add it to the document
         // later
         List<XmlElement> elements = elementsToAdd.get(fqt);

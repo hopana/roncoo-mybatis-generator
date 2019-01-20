@@ -26,7 +26,7 @@ public class InvalidConfigurationException extends Exception {
     private List<String> errors;
 
     /**
-     *  
+     *
      */
     public InvalidConfigurationException(List<String> errors) {
         super();

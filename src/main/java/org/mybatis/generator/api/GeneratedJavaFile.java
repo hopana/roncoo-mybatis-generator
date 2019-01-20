@@ -28,22 +28,17 @@ public class GeneratedJavaFile extends GeneratedFile {
     /**
      * Default constructor
      */
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            String fileEncoding,
-            JavaFormatter javaFormatter) {
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject, String fileEncoding, JavaFormatter javaFormatter) {
         super(targetProject);
         this.compilationUnit = compilationUnit;
         this.fileEncoding = fileEncoding;
         this.javaFormatter = javaFormatter;
     }
 
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            JavaFormatter javaFormatter) {
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject, JavaFormatter javaFormatter) {
         this(compilationUnit, targetProject, null, javaFormatter);
     }
-    
+
     @Override
     public String getFormattedContent() {
         return javaFormatter.getFormattedContent(compilationUnit);
@@ -62,9 +57,9 @@ public class GeneratedJavaFile extends GeneratedFile {
      * This method is required by the Eclipse Java merger. If you are not
      * running in Eclipse, or some other system that implements the Java merge
      * function, you may return null from this method.
-     * 
+     *
      * @return the CompilationUnit associated with this file, or null if the
-     *         file is not mergeable.
+     * file is not mergeable.
      */
     public CompilationUnit getCompilationUnit() {
         return compilationUnit;
@@ -73,7 +68,6 @@ public class GeneratedJavaFile extends GeneratedFile {
     /**
      * A Java file is mergeable if the getCompilationUnit() method returns a
      * valid compilation unit.
-     * 
      */
     @Override
     public boolean isMergeable() {

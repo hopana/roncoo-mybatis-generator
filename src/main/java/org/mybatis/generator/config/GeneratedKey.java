@@ -15,19 +15,19 @@
  */
 package org.mybatis.generator.config;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.util.List;
-
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.db.DatabaseDialects;
 
+import java.util.List;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 /**
  * This class specifies that a key is auto-generated, either as an identity
  * column (post insert), or as some other query like a sequences (pre insert).
- * 
+ *
  * @author Jeff Butler
  */
 public class GeneratedKey {
@@ -42,18 +42,16 @@ public class GeneratedKey {
     private String type;
 
     /**
-     * 
+     *
      */
-    public GeneratedKey(String column, String configuredSqlStatement,
-            boolean isIdentity, String type) {
+    public GeneratedKey(String column, String configuredSqlStatement, boolean isIdentity, String type) {
         super();
         this.column = column;
         this.type = type;
         this.isIdentity = isIdentity;
         this.configuredSqlStatement = configuredSqlStatement;
 
-        DatabaseDialects dialect = DatabaseDialects
-                .getDatabaseDialect(configuredSqlStatement);
+        DatabaseDialects dialect = DatabaseDialects.getDatabaseDialect(configuredSqlStatement);
         if (dialect == null) {
             this.runtimeSqlStatement = configuredSqlStatement;
         } else {
@@ -81,30 +79,29 @@ public class GeneratedKey {
      * This method is used by the iBATIS2 generators to know
      * if the XML <selectKey> element should be placed
      * before the insert SQL statement.
-     * 
+     *
      * @return
      */
     public boolean isPlacedBeforeInsertInIbatis2() {
         boolean rc;
-        
+
         if (stringHasValue(type)) {
             rc = true;
         } else {
             rc = !isIdentity;
         }
-        
+
         return rc;
     }
-    
+
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     public XmlElement toXmlElement() {
         XmlElement xmlElement = new XmlElement("generatedKey"); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute(
-                "sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
+        xmlElement.addAttribute(new Attribute("sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
         if (stringHasValue(type)) {
             xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
         }
@@ -126,18 +123,18 @@ public class GeneratedKey {
                         tableName));
             }
         }
-        
+
         if ("pre".equals(type) && isIdentity) { //$NON-NLS-1$
             errors.add(getString("ValidationError.23", //$NON-NLS-1$
                     tableName));
         }
-        
+
         if ("post".equals(type) && !isIdentity) { //$NON-NLS-1$
             errors.add(getString("ValidationError.24", //$NON-NLS-1$
                     tableName));
         }
     }
-    
+
     public boolean isJdbcStandard() {
         return "JDBC".equals(runtimeSqlStatement); //$NON-NLS-1$
     }

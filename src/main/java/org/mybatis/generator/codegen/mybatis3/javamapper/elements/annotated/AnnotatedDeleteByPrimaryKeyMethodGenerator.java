@@ -15,25 +15,23 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
-
-import java.util.Iterator;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 
+import java.util.Iterator;
+
+import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+
 /**
- * 
  * @author Jeff Butler
  */
-public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
-        DeleteByPrimaryKeyMethodGenerator {
+public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryKeyMethodGenerator {
 
     public AnnotatedDeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
         super(isSimple);
@@ -42,17 +40,16 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")); //$NON-NLS-1$
-        
+
         method.addAnnotation("@Delete({"); //$NON-NLS-1$
-        
+
         StringBuilder sb = new StringBuilder();
         javaIndent(sb, 1);
-        sb.append("\"delete from " ); //$NON-NLS-1$
-        sb.append(escapeStringForJava(
-                introspectedTable.getFullyQualifiedTableNameAtRuntime()));
+        sb.append("\"delete from "); //$NON-NLS-1$
+        sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
         sb.append("\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
-        
+
         boolean and = false;
         Iterator<IntrospectedColumn> iter = introspectedTable.getPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
@@ -66,18 +63,17 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
                 and = true;
             }
 
-            sb.append(escapeStringForJava(
-                    getEscapedColumnName(introspectedColumn)));
+            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
             sb.append(" = "); //$NON-NLS-1$
             sb.append(getParameterClause(introspectedColumn));
             sb.append('\"');
             if (iter.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 }

@@ -21,11 +21,9 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 
 /**
- * 
  * @author Jeff Butler
  */
-public class AnnotatedCountByExampleMethodGenerator extends
-    CountByExampleMethodGenerator {
+public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethodGenerator {
 
     public AnnotatedCountByExampleMethodGenerator() {
         super();
@@ -41,7 +39,7 @@ public class AnnotatedCountByExampleMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getCountByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 }

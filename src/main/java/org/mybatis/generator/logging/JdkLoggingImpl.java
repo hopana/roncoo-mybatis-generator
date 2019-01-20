@@ -20,10 +20,8 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * 
  * @author Clinton Begin
  * @author Jeff Butler
- * 
  */
 public class JdkLoggingImpl implements Log {
 

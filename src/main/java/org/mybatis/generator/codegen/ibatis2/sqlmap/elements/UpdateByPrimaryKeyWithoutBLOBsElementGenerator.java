@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
 
-import java.util.Iterator;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -24,13 +22,12 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 
+import java.util.Iterator;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public UpdateByPrimaryKeyWithoutBLOBsElementGenerator() {
         super();
@@ -40,8 +37,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getUpdateByPrimaryKeyStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getUpdateByPrimaryKeyStatementId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
                 introspectedTable.getBaseRecordType()));
 
@@ -56,16 +52,13 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
         sb.setLength(0);
         sb.append("set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = introspectedTable.getBaseColumns()
-                .iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getBaseColumns().iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 
-            sb.append(Ibatis2FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getParameterClause(introspectedColumn));
 
             if (iter.hasNext()) {
                 sb.append(',');
@@ -81,8 +74,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
         }
 
         boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             sb.setLength(0);
             if (and) {
                 sb.append("  and "); //$NON-NLS-1$
@@ -91,17 +83,13 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
                 and = true;
             }
 
-            sb.append(Ibatis2FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getParameterClause(introspectedColumn));
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (context.getPlugins()
-                .sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

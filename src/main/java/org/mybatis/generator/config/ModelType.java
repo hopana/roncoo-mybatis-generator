@@ -20,7 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * Typesafe enum of different model types
- * 
+ *
  * @author Jeff Butler
  */
 public enum ModelType {
@@ -31,7 +31,7 @@ public enum ModelType {
     private final String modelType;
 
     /**
-     * 
+     *
      */
     private ModelType(String modelType) {
         this.modelType = modelType;
@@ -49,8 +49,6 @@ public enum ModelType {
         } else if (CONDITIONAL.getModelType().equalsIgnoreCase(type)) {
             return CONDITIONAL;
         } else {
-            throw new RuntimeException(getString(
-                    "RuntimeError.13", type)); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.13", type)); //$NON-NLS-1$
         }
-    }
-}
+    }}

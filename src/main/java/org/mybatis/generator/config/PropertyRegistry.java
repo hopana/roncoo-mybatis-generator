@@ -20,9 +20,8 @@ package org.mybatis.generator.config;
  * This class holds constants for all properties recognized by the different
  * configuration elements. This helps document and maintain the different
  * properties, and helps to avoid spelling errors.
- * 
+ *
  * @author Jeff Butler
- * 
  */
 public class PropertyRegistry {
     public static final String ANY_ENABLE_SUB_PACKAGES = "enableSubPackages"; //$NON-NLS-1$

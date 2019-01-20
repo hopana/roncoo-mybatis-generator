@@ -26,7 +26,7 @@ import org.mybatis.generator.internal.util.StringUtility;
  * This class centralizes all the rules related to code generation - including
  * the methods and objects to create, and certain attributes related to those
  * objects.
- * 
+ *
  * @author Jeff Butler
  */
 public abstract class BaseRules implements Rules {
@@ -36,7 +36,7 @@ public abstract class BaseRules implements Rules {
     protected final boolean isModelOnly;
 
     /**
-     * 
+     *
      */
     public BaseRules(IntrospectedTable introspectedTable) {
         super();
@@ -50,14 +50,14 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the insert SQL Map element and DAO
      * method. If the insert statement is allowed, then generate the element and
      * method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateInsert() {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -65,14 +65,14 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the insert selective SQL Map element
      * and DAO method. If the insert statement is allowed, then generate the
      * element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateInsertSelective() {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -81,7 +81,7 @@ public abstract class BaseRules implements Rules {
      * insert statement parameter, as well as the returned value from the select
      * by primary key method. The actual class depends on how the domain model
      * is generated.
-     * 
+     *
      * @return the type of the class that holds all fields
      */
     public FullyQualifiedJavaType calculateAllFieldsClass() {
@@ -104,17 +104,16 @@ public abstract class BaseRules implements Rules {
      * BLOBs SQL Map element and DAO method. If the table has a primary key as
      * well as other non-BLOB fields, and the updateByPrimaryKey statement is
      * allowed, then generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithoutBLOBs() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && introspectedTable.hasBaseColumns();
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns() && introspectedTable
+                .hasBaseColumns();
 
         return rc;
     }
@@ -124,17 +123,16 @@ public abstract class BaseRules implements Rules {
      * SQL Map element and DAO method. If the table has a primary key as well as
      * other BLOB fields, and the updateByPrimaryKey statement is allowed, then
      * generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithBLOBs() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && introspectedTable.hasBLOBColumns();
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns() && introspectedTable
+                .hasBLOBColumns();
 
         return rc;
     }
@@ -144,18 +142,16 @@ public abstract class BaseRules implements Rules {
      * SQL Map element and DAO method. If the table has a primary key as well as
      * other fields, and the updateByPrimaryKey statement is allowed, then
      * generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeySelective() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && (introspectedTable.hasBLOBColumns() || introspectedTable
-                        .hasBaseColumns());
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns() && (introspectedTable
+                .hasBLOBColumns() || introspectedTable.hasBaseColumns());
 
         return rc;
     }
@@ -165,16 +161,15 @@ public abstract class BaseRules implements Rules {
      * element and DAO method. If the table has a primary key, and the
      * deleteByPrimaryKey statement is allowed, then generate the element and
      * method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateDeleteByPrimaryKey() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns();
+
+        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns();
 
         return rc;
     }
@@ -183,14 +178,14 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the delete by example SQL Map element
      * and DAO method. If the deleteByExample statement is allowed, then
      * generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateDeleteByExample() {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();
 
         return rc;
@@ -199,16 +194,15 @@ public abstract class BaseRules implements Rules {
     /**
      * Implements the rule for generating the result map without BLOBs. If
      * either select method is allowed, then generate the result map.
-     * 
+     *
      * @return true if the result map should be generated
      */
     public boolean generateBaseResultMap() {
         if (isModelOnly) {
             return true;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
 
         return rc;
     }
@@ -217,45 +211,43 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the result map with BLOBs. If the
      * table has BLOB columns, and either select method is allowed, then
      * generate the result map.
-     * 
+     *
      * @return true if the result map should be generated
      */
     public boolean generateResultMapWithBLOBs() {
         boolean rc;
-        
+
         if (introspectedTable.hasBLOBColumns()) {
             if (isModelOnly) {
                 rc = true;
             } else {
-                rc = tableConfiguration.isSelectByExampleStatementEnabled() 
-                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+                rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
             }
         } else {
             rc = false;
         }
-        
+
         return rc;
     }
 
     /**
      * Implements the rule for generating the SQL example where clause element.
-     * 
+     * <p>
      * In iBATIS2, generate the element if the selectByExample, deleteByExample,
      * updateByExample, or countByExample statements are allowed.
-     * 
+     * <p>
      * In MyBatis3, generate the element if the selectByExample,
      * deleteByExample, or countByExample statements are allowed.
-     * 
+     *
      * @return true if the SQL where clause element should be generated
      */
     public boolean generateSQLExampleWhereClause() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isDeleteByExampleStatementEnabled() || tableConfiguration
+                .isCountByExampleStatementEnabled();
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {
             rc |= tableConfiguration.isUpdateByExampleStatementEnabled();
@@ -267,21 +259,20 @@ public abstract class BaseRules implements Rules {
     /**
      * Implements the rule for generating the SQL example where clause element
      * specifically for use in the update by example methods.
-     * 
+     * <p>
      * In iBATIS2, do not generate the element.
-     * 
+     * <p>
      * In MyBatis3, generate the element if the updateByExample statements are
      * allowed.
-     * 
+     *
      * @return true if the SQL where clause element should be generated
      */
     public boolean generateMyBatis3UpdateByExampleWhereClause() {
         if (isModelOnly) {
             return false;
         }
-        
-        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3
-                && tableConfiguration.isUpdateByExampleStatementEnabled();
+
+        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
 
     /**
@@ -289,18 +280,16 @@ public abstract class BaseRules implements Rules {
      * element and DAO method. If the table has a primary key as well as other
      * fields, and the selectByPrimaryKey statement is allowed, then generate
      * the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByPrimaryKey() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && (introspectedTable.hasBaseColumns() || introspectedTable
-                        .hasBLOBColumns());
+
+        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns() && (introspectedTable
+                .hasBaseColumns() || introspectedTable.hasBLOBColumns());
 
         return rc;
     }
@@ -309,14 +298,14 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the select by example without BLOBs
      * SQL Map element and DAO method. If the selectByExample statement is
      * allowed, then generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByExampleWithoutBLOBs() {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isSelectByExampleStatementEnabled();
     }
 
@@ -325,16 +314,15 @@ public abstract class BaseRules implements Rules {
      * Map element and DAO method. If the table has BLOB fields and the
      * selectByExample statement is allowed, then generate the element and
      * method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByExampleWithBLOBs() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                && introspectedTable.hasBLOBColumns();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() && introspectedTable.hasBLOBColumns();
 
         return rc;
     }
@@ -343,24 +331,22 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating an example class. The class should be
      * generated if the selectByExample or deleteByExample or countByExample
      * methods are allowed.
-     * 
+     *
      * @return true if the example class should be generated
      */
     public boolean generateExampleClass() {
-        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
-                && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null && introspectedTable.getContext()
+                                                                                                         .getJavaClientGeneratorConfiguration() == null) {
             // this is a model only context - don't generate the example class
             return false;
         }
-        
+
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled()
-                || tableConfiguration.isUpdateByExampleStatementEnabled();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isDeleteByExampleStatementEnabled() || tableConfiguration
+                .isCountByExampleStatementEnabled() || tableConfiguration.isUpdateByExampleStatementEnabled();
 
         return rc;
     }
@@ -369,7 +355,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isCountByExampleStatementEnabled();
 
         return rc;
@@ -379,7 +365,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();
 
         return rc;
@@ -389,10 +375,9 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
-                && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
-                        .hasBaseColumns());
+
+        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled() && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
+                .hasBaseColumns());
 
         return rc;
     }
@@ -401,9 +386,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
-                && introspectedTable.hasBLOBColumns();
+
+        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled() && introspectedTable.hasBLOBColumns();
 
         return rc;
     }
@@ -416,19 +400,16 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        return generateSelectByPrimaryKey()
-                || generateSelectByExampleWithoutBLOBs();
+
+        return generateSelectByPrimaryKey() || generateSelectByExampleWithoutBLOBs();
     }
 
     public boolean generateBlobColumnList() {
         if (isModelOnly) {
             return false;
         }
-        
-        return introspectedTable.hasBLOBColumns()
-                && (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
-                        .isSelectByPrimaryKeyStatementEnabled());
+
+        return introspectedTable.hasBLOBColumns() && (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isSelectByPrimaryKeyStatementEnabled());
     }
 
     public boolean generateJavaClient() {

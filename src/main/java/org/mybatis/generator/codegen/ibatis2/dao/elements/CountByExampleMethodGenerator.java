@@ -15,20 +15,13 @@
  */
 package org.mybatis.generator.codegen.ibatis2.dao.elements;
 
+import org.mybatis.generator.api.dom.java.*;
+
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
 
@@ -48,9 +41,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Integer count = (Integer)  "); //$NON-NLS-1$
-        sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getCountByExampleStatementId(), "example")); //$NON-NLS-1$
+        sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable.getIbatis2SqlMapNamespace(), introspectedTable.getCountByExampleStatementId(), "example")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
 
         if (generateForJava5) {
@@ -59,8 +50,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
             method.addBodyLine("return count.intValue();"); //$NON-NLS-1$
         }
 
-        if (context.getPlugins().clientCountByExampleMethodGenerated(method,
-                topLevelClass, introspectedTable)) {
+        if (context.getPlugins().clientCountByExampleMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
@@ -72,8 +62,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
             Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
             Method method = getMethodShell(importedTypes);
 
-            if (context.getPlugins().clientCountByExampleMethodGenerated(
-                    method, interfaze, introspectedTable)) {
+            if (context.getPlugins().clientCountByExampleMethodGenerated(method, interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);
             }
@@ -81,15 +70,13 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
     }
 
     private Method getMethodShell(Set<FullyQualifiedJavaType> importedTypes) {
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getExampleType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(type);
 
         Method method = new Method();
         method.setVisibility(getExampleMethodVisibility());
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(getDAOMethodNameCalculator()
-                .getCountByExampleMethodName(introspectedTable));
+        method.setName(getDAOMethodNameCalculator().getCountByExampleMethodName(introspectedTable));
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
 
         for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {
@@ -97,8 +84,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
             importedTypes.add(fqjt);
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         return method;
     }

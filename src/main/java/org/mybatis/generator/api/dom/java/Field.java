@@ -28,19 +28,19 @@ public class Field extends JavaElement {
     private boolean isVolatile;
 
     /**
-     *  
+     *
      */
     public Field() {
         // use a default name to avoid NPE
         this("foo", FullyQualifiedJavaType.getIntInstance()); //$NON-NLS-1$
     }
-    
+
     public Field(String name, FullyQualifiedJavaType type) {
         super();
         this.name = name;
         this.type = type;
     }
-    
+
     public Field(Field field) {
         super(field);
         this.type = field.type;
@@ -56,8 +56,7 @@ public class Field extends JavaElement {
     }
 
     /**
-     * @param name
-     *            The name to set.
+     * @param name The name to set.
      */
     public void setName(String name) {
         this.name = name;
@@ -71,8 +70,7 @@ public class Field extends JavaElement {
     }
 
     /**
-     * @param type
-     *            The type to set.
+     * @param type The type to set.
      */
     public void setType(FullyQualifiedJavaType type) {
         this.type = type;
@@ -86,8 +84,7 @@ public class Field extends JavaElement {
     }
 
     /**
-     * @param initializationString
-     *            The initializationString to set.
+     * @param initializationString The initializationString to set.
      */
     public void setInitializationString(String initializationString) {
         this.initializationString = initializationString;
@@ -113,11 +110,11 @@ public class Field extends JavaElement {
         if (isTransient()) {
             sb.append("transient "); //$NON-NLS-1$
         }
-        
+
         if (isVolatile()) {
             sb.append("volatile "); //$NON-NLS-1$
         }
-        
+
         sb.append(type.getShortName());
 
         sb.append(' ');

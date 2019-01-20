@@ -15,13 +15,13 @@
  */
 package org.mybatis.generator.internal;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.api.ShellCallback;
+import org.mybatis.generator.exception.ShellException;
 
 import java.io.File;
 import java.util.StringTokenizer;
 
-import org.mybatis.generator.api.ShellCallback;
-import org.mybatis.generator.exception.ShellException;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * @author Jeff Butler
@@ -30,15 +30,14 @@ public class DefaultShellCallback implements ShellCallback {
     private boolean overwrite;
 
     /**
-     *  
+     *
      */
     public DefaultShellCallback(boolean overwrite) {
         super();
         this.overwrite = overwrite;
     }
 
-    public File getDirectory(String targetProject, String targetPackage)
-            throws ShellException {
+    public File getDirectory(String targetProject, String targetPackage) throws ShellException {
         // targetProject is interpreted as a directory that must exist
         //
         // targetPackage is interpreted as a sub directory, but in package
@@ -83,9 +82,7 @@ public class DefaultShellCallback implements ShellCallback {
         return overwrite;
     }
 
-    public String mergeJavaFile(String newFileSource,
-            String existingFileFullPath, String[] javadocTags, String fileEncoding)
-            throws ShellException {
+    public String mergeJavaFile(String newFileSource, String existingFileFullPath, String[] javadocTags, String fileEncoding) throws ShellException {
         throw new UnsupportedOperationException();
     }
 }

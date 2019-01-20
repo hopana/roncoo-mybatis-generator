@@ -15,10 +15,6 @@
  */
 package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -28,10 +24,12 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
@@ -43,11 +41,9 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getInsertStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getInsertStatementId())); //$NON-NLS-1$
 
-        FullyQualifiedJavaType parameterType = introspectedTable.getRules()
-                .calculateAllFieldsClass();
+        FullyQualifiedJavaType parameterType = introspectedTable.getRules().calculateAllFieldsClass();
 
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
                 parameterType.getFullyQualifiedName()));
@@ -57,8 +53,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         GeneratedKey gk = introspectedTable.getGeneratedKey();
 
         if (gk != null && gk.isPlacedBeforeInsertInIbatis2()) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
+            IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
@@ -71,15 +66,13 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         StringBuilder valuesClause = new StringBuilder();
 
         insertClause.append("insert into "); //$NON-NLS-1$
-        insertClause.append(introspectedTable
-                .getFullyQualifiedTableNameAtRuntime());
+        insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         insertClause.append(" ("); //$NON-NLS-1$
 
         valuesClause.append("values ("); //$NON-NLS-1$
 
         List<String> valuesClauses = new ArrayList<String>();
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
-                .iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
             if (introspectedColumn.isIdentity()) {
@@ -87,10 +80,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 continue;
             }
 
-            insertClause.append(Ibatis2FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            valuesClause.append(Ibatis2FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            insertClause.append(Ibatis2FormattingUtilities.getEscapedColumnName(introspectedColumn));
+            valuesClause.append(Ibatis2FormattingUtilities.getParameterClause(introspectedColumn));
             if (iter.hasNext()) {
                 insertClause.append(", "); //$NON-NLS-1$
                 valuesClause.append(", "); //$NON-NLS-1$
@@ -118,8 +109,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         }
 
         if (gk != null && !gk.isPlacedBeforeInsertInIbatis2()) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
+            IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
@@ -128,8 +118,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             }
         }
 
-        if (context.getPlugins().sqlMapInsertElementGenerated(answer,
-                introspectedTable)) {
+        if (context.getPlugins().sqlMapInsertElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

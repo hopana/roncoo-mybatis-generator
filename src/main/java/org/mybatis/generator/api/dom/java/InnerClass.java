@@ -15,18 +15,14 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.OutputUtilities;
+
+import java.util.*;
 
 /**
  * This class encapsulates the idea of an inner class - it has methods that make
  * it easy to generate inner classes.
- * 
+ *
  * @author Jeff Butler
  */
 public class InnerClass extends JavaElement {
@@ -45,11 +41,11 @@ public class InnerClass extends JavaElement {
     private List<Method> methods;
 
     private boolean isAbstract;
-    
+
     private List<InitializationBlock> initializationBlocks;
 
     /**
-     *  
+     *
      */
     public InnerClass(FullyQualifiedJavaType type) {
         super();
@@ -85,8 +81,7 @@ public class InnerClass extends JavaElement {
     }
 
     /**
-     * @param superClass
-     *            The superClass to set.
+     * @param superClass The superClass to set.
      */
     public void setSuperClass(FullyQualifiedJavaType superClass) {
         this.superClass = superClass;
@@ -169,7 +164,7 @@ public class InnerClass extends JavaElement {
 
         sb.append(" {"); //$NON-NLS-1$
         indentLevel++;
-        
+
         Iterator<Field> fldIter = fields.iterator();
         while (fldIter.hasNext()) {
             OutputUtilities.newLine(sb);

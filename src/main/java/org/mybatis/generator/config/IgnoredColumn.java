@@ -16,18 +16,17 @@
 
 package org.mybatis.generator.config;
 
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+import java.util.List;
+
 import static org.mybatis.generator.internal.util.StringUtility.stringContainsSpace;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.util.List;
-
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
 /**
  * @author Jeff Butler
- * 
  */
 public class IgnoredColumn {
 
@@ -38,7 +37,7 @@ public class IgnoredColumn {
     private String configuredDelimitedColumnName;
 
     /**
-     * 
+     *
      */
     public IgnoredColumn(String columnName) {
         super();
@@ -76,8 +75,7 @@ public class IgnoredColumn {
         xmlElement.addAttribute(new Attribute("column", columnName)); //$NON-NLS-1$
 
         if (stringHasValue(configuredDelimitedColumnName)) {
-            xmlElement.addAttribute(new Attribute(
-                    "delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
         }
 
         return xmlElement;

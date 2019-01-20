@@ -15,13 +15,13 @@
  */
 package org.mybatis.generator.config.xml;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.util.List;
-
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import java.util.List;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * @author Jeff Butler
@@ -32,8 +32,8 @@ public class ParserErrorHandler implements ErrorHandler {
     private List<String> errors;
 
     /**
-	 *  
-	 */
+     *
+     */
     public ParserErrorHandler(List<String> warnings, List<String> errors) {
         super();
         this.warnings = warnings;
@@ -42,34 +42,31 @@ public class ParserErrorHandler implements ErrorHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
     public void warning(SAXParseException exception) throws SAXException {
         warnings.add(getString("Warning.7", //$NON-NLS-1$
-                Integer.toString(exception.getLineNumber()), exception
-                        .getMessage()));
+                Integer.toString(exception.getLineNumber()), exception.getMessage()));
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
     public void error(SAXParseException exception) throws SAXException {
         errors.add(getString("RuntimeError.4", //$NON-NLS-1$
-                Integer.toString(exception.getLineNumber()), exception
-                        .getMessage()));
+                Integer.toString(exception.getLineNumber()), exception.getMessage()));
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
     public void fatalError(SAXParseException exception) throws SAXException {
         errors.add(getString("RuntimeError.4", //$NON-NLS-1$
-                Integer.toString(exception.getLineNumber()), exception
-                        .getMessage()));
+                Integer.toString(exception.getLineNumber()), exception.getMessage()));
     }
 }

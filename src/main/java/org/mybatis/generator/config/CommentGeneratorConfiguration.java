@@ -21,12 +21,11 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 
 /**
  * @author Jeff Butler
- * 
  */
 public class CommentGeneratorConfiguration extends TypedPropertyHolder {
 
     /**
-     * 
+     *
      */
     public CommentGeneratorConfiguration() {
     }

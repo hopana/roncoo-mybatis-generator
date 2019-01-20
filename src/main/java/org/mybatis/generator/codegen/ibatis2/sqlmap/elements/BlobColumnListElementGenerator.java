@@ -15,18 +15,16 @@
  */
 package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
 
-import java.util.Iterator;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 
+import java.util.Iterator;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator {
 
@@ -45,11 +43,9 @@ public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator 
 
         StringBuilder sb = new StringBuilder();
 
-        Iterator<IntrospectedColumn> iter = introspectedTable.getBLOBColumns()
-                .iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getBLOBColumns().iterator();
         while (iter.hasNext()) {
-            sb.append(Ibatis2FormattingUtilities.getSelectListPhrase(iter
-                    .next()));
+            sb.append(Ibatis2FormattingUtilities.getSelectListPhrase(iter.next()));
 
             if (iter.hasNext()) {
                 sb.append(", "); //$NON-NLS-1$
@@ -65,8 +61,7 @@ public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator 
             answer.addElement((new TextElement(sb.toString())));
         }
 
-        if (context.getPlugins().sqlMapBlobColumnListElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapBlobColumnListElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

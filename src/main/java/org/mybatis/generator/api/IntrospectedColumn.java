@@ -1,12 +1,12 @@
 /*
  * Copyright 2005 The Apache Software Foundation
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,18 +15,18 @@
  */
 package org.mybatis.generator.api;
 
-import java.sql.Types;
-import java.util.Properties;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.types.Jdbc4Types;
 import org.mybatis.generator.internal.util.StringUtility;
 
+import java.sql.Types;
+import java.util.Properties;
+
 /**
  * This class holds information about an introspected column. The class has
  * utility methods useful for generating iBATIS objects.
- * 
+ *
  * @author Jeff Butler
  */
 public class IntrospectedColumn {
@@ -43,7 +43,7 @@ public class IntrospectedColumn {
     protected int scale;
 
     protected boolean identity;
-    
+
     protected boolean isSequenceColumn;
 
     protected String javaProperty;
@@ -134,8 +134,7 @@ public class IntrospectedColumn {
 
     public void setActualColumnName(String actualColumnName) {
         this.actualColumnName = actualColumnName;
-        isColumnNameDelimited = StringUtility
-                .stringContainsSpace(actualColumnName);
+        isColumnNameDelimited = StringUtility.stringContainsSpace(actualColumnName);
     }
 
     /**
@@ -146,8 +145,7 @@ public class IntrospectedColumn {
     }
 
     /**
-     * @param identity
-     *            The identity to set.
+     * @param identity The identity to set.
      */
     public void setIdentity(boolean identity) {
         this.identity = identity;
@@ -162,15 +160,11 @@ public class IntrospectedColumn {
     }
 
     public boolean isStringColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getStringInstance());
+        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getStringInstance());
     }
 
     public boolean isJdbcCharacterColumn() {
-        return jdbcType == Types.CHAR || jdbcType == Types.CLOB
-                || jdbcType == Types.LONGVARCHAR || jdbcType == Types.VARCHAR
-                || jdbcType == Jdbc4Types.LONGNVARCHAR || jdbcType == Jdbc4Types.NCHAR
-                || jdbcType == Jdbc4Types.NCLOB || jdbcType == Jdbc4Types.NVARCHAR;
+        return jdbcType == Types.CHAR || jdbcType == Types.CLOB || jdbcType == Types.LONGVARCHAR || jdbcType == Types.VARCHAR || jdbcType == Jdbc4Types.LONGNVARCHAR || jdbcType == Jdbc4Types.NCHAR || jdbcType == Jdbc4Types.NCLOB || jdbcType == Jdbc4Types.NVARCHAR;
     }
 
     public String getJavaProperty() {
@@ -194,15 +188,11 @@ public class IntrospectedColumn {
     }
 
     public boolean isJDBCDateColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getDateInstance())
-                && "DATE".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
+        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getDateInstance()) && "DATE".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public boolean isJDBCTimeColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getDateInstance())
-                && "TIME".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
+        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getDateInstance()) && "TIME".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public String getTypeHandler() {
@@ -241,8 +231,7 @@ public class IntrospectedColumn {
         return fullyQualifiedJavaType;
     }
 
-    public void setFullyQualifiedJavaType(
-            FullyQualifiedJavaType fullyQualifiedJavaType) {
+    public void setFullyQualifiedJavaType(FullyQualifiedJavaType fullyQualifiedJavaType) {
         this.fullyQualifiedJavaType = fullyQualifiedJavaType;
     }
 

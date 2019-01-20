@@ -20,14 +20,13 @@ package org.mybatis.generator.codegen;
  * an XML generator is required to match the methods in the
  * Java client.  For example, a Java client built entirely with
  * annotations does not need matching XML.
- * 
- * @author Jeff Butler
  *
+ * @author Jeff Butler
  */
 public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator {
 
     private boolean requiresXMLGenerator;
-    
+
     public AbstractJavaClientGenerator(boolean requiresXMLGenerator) {
         super();
         this.requiresXMLGenerator = requiresXMLGenerator;
@@ -39,11 +38,11 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
     public boolean requiresXMLGenerator() {
         return requiresXMLGenerator;
     }
-    
+
     /**
      * This method returns an instance of the XML generator associated
      * with this client generator.
-     * 
+     *
      * @return the matched XML generator.  May return null if no
      * XML is required by this generator
      */

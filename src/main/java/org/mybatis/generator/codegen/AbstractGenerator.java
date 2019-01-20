@@ -15,16 +15,14 @@
  */
 package org.mybatis.generator.codegen;
 
-import java.util.List;
-
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
 
+import java.util.List;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public abstract class AbstractGenerator {
     protected Context context;

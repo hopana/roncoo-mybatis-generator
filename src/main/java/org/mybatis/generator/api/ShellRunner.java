@@ -15,19 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -35,9 +22,16 @@ import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.logging.LogFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.*;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 /**
  * This class allows the code generator to be run from the command line.
- * 
+ *
  * @author Jeff Butler
  */
 public class ShellRunner {
@@ -92,8 +86,7 @@ public class ShellRunner {
 
         Set<String> contexts = new HashSet<String>();
         if (arguments.containsKey(CONTEXT_IDS)) {
-            StringTokenizer st = new StringTokenizer(
-                    arguments.get(CONTEXT_IDS), ","); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(arguments.get(CONTEXT_IDS), ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (s.length() > 0) {
@@ -106,13 +99,11 @@ public class ShellRunner {
             ConfigurationParser cp = new ConfigurationParser(warnings);
             Configuration config = cp.parseConfiguration(configurationFile);
 
-            DefaultShellCallback shellCallback = new DefaultShellCallback(
-                    arguments.containsKey(OVERWRITE));
+            DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
 
-            ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
-                    : null;
+            ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback() : null;
 
             myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
 
@@ -179,8 +170,7 @@ public class ShellRunner {
                 if ((i + 1) < args.length) {
                     arguments.put(CONFIG_FILE, args[i + 1]);
                 } else {
-                    errors.add(getString(
-                            "RuntimeError.19", CONFIG_FILE)); //$NON-NLS-1$
+                    errors.add(getString("RuntimeError.19", CONFIG_FILE)); //$NON-NLS-1$
                 }
                 i++;
             } else if (OVERWRITE.equalsIgnoreCase(args[i])) {
@@ -199,8 +189,7 @@ public class ShellRunner {
                 if ((i + 1) < args.length) {
                     arguments.put(CONTEXT_IDS, args[i + 1]);
                 } else {
-                    errors.add(getString(
-                            "RuntimeError.19", CONTEXT_IDS)); //$NON-NLS-1$
+                    errors.add(getString("RuntimeError.19", CONTEXT_IDS)); //$NON-NLS-1$
                 }
                 i++;
             } else if (TABLES.equalsIgnoreCase(args[i])) {

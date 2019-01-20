@@ -15,28 +15,21 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.*;
+
+import java.util.Set;
+import java.util.TreeSet;
+
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     public ProviderUpdateByPrimaryKeySelectiveMethodGenerator() {
         super();
@@ -55,32 +48,29 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends
 
         FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(fqjt);
-        
+
         Method method = new Method(introspectedTable.getUpdateByPrimaryKeySelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
-        
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("BEGIN();"); //$NON-NLS-1$
-        
+
         method.addBodyLine(String.format("UPDATE(\"%s\");", //$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine(String.format("if (record.%s() != null) {", //$NON-NLS-1$
-                    getGetterMethodName(introspectedColumn.getJavaProperty(),
-                            introspectedColumn.getFullyQualifiedJavaType())));
+                        getGetterMethodName(introspectedColumn.getJavaProperty(), introspectedColumn.getFullyQualifiedJavaType())));
             }
 
             method.addBodyLine(String.format("SET(\"%s = %s\");", //$NON-NLS-1$
-                    escapeStringForJava(getEscapedColumnName(introspectedColumn)),
-                    getParameterClause(introspectedColumn)));
-                
+                    escapeStringForJava(getEscapedColumnName(introspectedColumn)), getParameterClause(introspectedColumn)));
+
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine("}"); //$NON-NLS-1$
             }
@@ -90,15 +80,13 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             method.addBodyLine(String.format("WHERE(\"%s = %s\");", //$NON-NLS-1$
-                    escapeStringForJava(getEscapedColumnName(introspectedColumn)),
-                    getParameterClause(introspectedColumn)));
+                    escapeStringForJava(getEscapedColumnName(introspectedColumn)), getParameterClause(introspectedColumn)));
         }
-        
+
         method.addBodyLine(""); //$NON-NLS-1$
         method.addBodyLine("return SQL();"); //$NON-NLS-1$
 
-        if (context.getPlugins().providerUpdateByPrimaryKeySelectiveMethodGenerated(method, topLevelClass,
-                introspectedTable)) {
+        if (context.getPlugins().providerUpdateByPrimaryKeySelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);

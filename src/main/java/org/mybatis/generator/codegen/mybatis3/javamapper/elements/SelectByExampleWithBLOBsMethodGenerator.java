@@ -15,22 +15,15 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
+import org.mybatis.generator.api.dom.java.*;
+
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class SelectByExampleWithBLOBsMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class SelectByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public SelectByExampleWithBLOBsMethodGenerator() {
         super();
@@ -39,41 +32,33 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getExampleType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(type);
         importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
-                .getNewListInstance();
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         FullyQualifiedJavaType listType;
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            listType = new FullyQualifiedJavaType(introspectedTable
-                    .getRecordWithBLOBsType());
+            listType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
         } else {
             // the blob fields must be rolled up into the base class
-            listType = new FullyQualifiedJavaType(introspectedTable
-                    .getBaseRecordType());
+            listType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         }
 
         importedTypes.add(listType);
         returnType.addTypeArgument(listType);
         method.setReturnType(returnType);
-        method.setName(introspectedTable
-                .getSelectByExampleWithBLOBsStatementId());
+        method.setName(introspectedTable.getSelectByExampleWithBLOBsStatementId());
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
-        
-        if (context.getPlugins()
-                .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze,
-                        introspectedTable)) {
+
+        if (context.getPlugins().clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

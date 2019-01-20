@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.mybatis.generator.api.dom.OutputUtilities;
 
 /**
  * @author Jeff Butler
@@ -35,17 +35,17 @@ public abstract class JavaElement {
     private List<String> annotations;
 
     /**
-     *  
+     *
      */
     public JavaElement() {
         super();
         javaDocLines = new ArrayList<String>();
         annotations = new ArrayList<String>();
     }
-    
+
     /**
      * Copy Constructor.
-     * 
+     *
      * @param original
      */
     public JavaElement(JavaElement original) {
@@ -84,8 +84,7 @@ public abstract class JavaElement {
     }
 
     /**
-     * @param visibility
-     *            The visibility to set.
+     * @param visibility The visibility to set.
      */
     public void setVisibility(JavaVisibility visibility) {
         this.visibility = visibility;

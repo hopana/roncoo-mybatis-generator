@@ -16,34 +16,28 @@
 
 package org.mybatis.generator.plugins;
 
-import java.util.List;
-
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.InnerClass;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
+
+import java.util.List;
 
 /**
  * This plugin demonstrates adding methods to the example class to enable
  * case-insensitive LIKE searches. It shows hows to construct new methods and
  * add them to an existing class.
- * 
+ * <p>
  * This plugin only adds methods for String fields mapped to a JDBC character
  * type (CHAR, VARCHAR, etc.)
- * 
+ *
  * @author Jeff Butler
- * 
  */
 public class CaseInsensitiveLikePlugin extends PluginAdapter {
 
     /**
-     * 
+     *
      */
     public CaseInsensitiveLikePlugin() {
         super();
@@ -54,8 +48,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 
         InnerClass criteria = null;
         // first, find the Criteria inner class
@@ -71,17 +64,14 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
             return true;
         }
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getNonBLOBColumns()) {
-            if (!introspectedColumn.isJdbcCharacterColumn()
-                    || !introspectedColumn.isStringColumn()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
+            if (!introspectedColumn.isJdbcCharacterColumn() || !introspectedColumn.isStringColumn()) {
                 continue;
             }
 
             Method method = new Method();
             method.setVisibility(JavaVisibility.PUBLIC);
-            method.addParameter(new Parameter(introspectedColumn
-                    .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
+            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
 
             StringBuilder sb = new StringBuilder();
             sb.append(introspectedColumn.getJavaProperty());
@@ -93,8 +83,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
 
             sb.setLength(0);
             sb.append("addCriterion(\"upper("); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities
-                    .getAliasedActualColumnName(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getAliasedActualColumnName(introspectedColumn));
             sb.append(") like\", value.toUpperCase(), \""); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
             sb.append("\");"); //$NON-NLS-1$

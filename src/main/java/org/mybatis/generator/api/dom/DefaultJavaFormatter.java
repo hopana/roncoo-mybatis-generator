@@ -22,13 +22,12 @@ import org.mybatis.generator.config.Context;
 /**
  * This class is the default formatter for generated Java.  This class will use the
  * built in formatting of the DOM classes directly.
- * 
- * @author Jeff Butler
  *
+ * @author Jeff Butler
  */
 public class DefaultJavaFormatter implements JavaFormatter {
     protected Context context;
-    
+
     public String getFormattedContent(CompilationUnit compilationUnit) {
         return compilationUnit.getFormattedContent();
     }

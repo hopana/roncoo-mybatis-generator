@@ -18,9 +18,7 @@ package org.mybatis.generator.logging;
 import org.apache.log4j.Logger;
 
 /**
- * 
  * @author Clinton Begin
- * 
  */
 public class Log4jImpl implements Log {
 

@@ -28,8 +28,8 @@ public class XMLParserException extends Exception {
     private List<String> errors;
 
     /**
-	 *  
-	 */
+     *
+     */
     public XMLParserException(List<String> errors) {
         super();
         this.errors = errors;

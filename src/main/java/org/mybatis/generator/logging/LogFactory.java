@@ -15,16 +15,15 @@
  */
 package org.mybatis.generator.logging;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 import org.mybatis.generator.internal.ObjectFactory;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * Factory for creating loggers. Uses runtime introspection to determine the
  * AbstractLogFactory implementation.
- * 
+ *
  * @author Jeff Butler
- * 
  */
 public class LogFactory {
     private static AbstractLogFactory logFactory;

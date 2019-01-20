@@ -15,28 +15,26 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
-
-import java.util.Iterator;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 
+import java.util.Iterator;
+
+import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+
 /**
- * 
  * @author Jeff Butler
  */
-public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
-    UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
+public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
 
     private boolean isSimple;
-    
+
     public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(boolean isSimple) {
         super();
         this.isSimple = isSimple;
@@ -45,7 +43,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
-        
+
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -110,7 +108,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
             }
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 }

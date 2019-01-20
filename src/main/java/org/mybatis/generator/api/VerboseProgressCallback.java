@@ -20,12 +20,11 @@ import org.mybatis.generator.internal.NullProgressCallback;
 
 /**
  * @author Jeff Butler
- * 
  */
 public class VerboseProgressCallback extends NullProgressCallback {
 
     /**
-     * 
+     *
      */
     public VerboseProgressCallback() {
         super();

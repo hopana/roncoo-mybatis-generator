@@ -1,12 +1,12 @@
 /*
  * Copyright 2015-2017 RonCoo(http://www.roncoo.com) Group.
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *  
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,130 +20,128 @@ import java.util.List;
 
 /**
  * 数据分页组件
- * 
- * @author wujing
+ *
  * @param <T>
+ * @author wujing
  */
 public class Page<T extends Serializable> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 当前分页的数据集
-	 */
-	private List<T> list;
+    /**
+     * 当前分页的数据集
+     */
+    private List<T> list;
 
-	/**
-	 * 总记录数
-	 */
-	private int totalCount;
+    /**
+     * 总记录数
+     */
+    private int totalCount;
 
-	/**
-	 * 总页数
-	 */
-	private int totalPage;
+    /**
+     * 总页数
+     */
+    private int totalPage;
 
-	/**
-	 * 当前页
-	 */
-	private int currentPage;
+    /**
+     * 当前页
+     */
+    private int currentPage;
 
-	/**
-	 * 每页记录数
-	 */
-	private int numPerPage;
+    /**
+     * 每页记录数
+     */
+    private int numPerPage;
 
-	/**
-	 * 排序字段
-	 */
-	private String orderField;
+    /**
+     * 排序字段
+     */
+    private String orderField;
 
-	/**
-	 * 排序方式：asc or desc
-	 */
-	private String orderDirection;
-	
-	public Page() {
-	}
+    /**
+     * 排序方式：asc or desc
+     */
+    private String orderDirection;
 
-	/**
-	 * 构造函数
-	 * 
-	 * @param totalCount
-	 *            总记录数
-	 * @param totalPage
-	 *            总页数
-	 * @param pageCurrent
-	 * @param pageSize
-	 * @param list
-	 */
-	public Page(int totalCount, int totalPage, int currentPage, int numPerPage, List<T> list) {
-		this.totalCount = totalCount;
-		this.totalPage = totalPage;
-		this.currentPage = currentPage;
-		this.numPerPage = numPerPage;
-		this.list = list;
-	}
+    public Page() {
+    }
 
-	public List<T> getList() {
-		return list;
-	}
+    /**
+     * 构造函数
+     *
+     * @param totalCount  总记录数
+     * @param totalPage   总页数
+     * @param pageCurrent
+     * @param pageSize
+     * @param list
+     */
+    public Page(int totalCount, int totalPage, int currentPage, int numPerPage, List<T> list) {
+        this.totalCount = totalCount;
+        this.totalPage = totalPage;
+        this.currentPage = currentPage;
+        this.numPerPage = numPerPage;
+        this.list = list;
+    }
 
-	public void setList(List<T> list) {
-		this.list = list;
-	}
+    public List<T> getList() {
+        return list;
+    }
 
-	public int getTotalCount() {
-		return totalCount;
-	}
+    public void setList(List<T> list) {
+        this.list = list;
+    }
 
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-	}
+    public int getTotalCount() {
+        return totalCount;
+    }
 
-	public int getTotalPage() {
-		return totalPage;
-	}
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
 
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
+    public int getTotalPage() {
+        return totalPage;
+    }
 
-	public int getCurrentPage() {
-		return currentPage;
-	}
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
 
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
+    public int getCurrentPage() {
+        return currentPage;
+    }
 
-	public int getNumPerPage() {
-		return numPerPage;
-	}
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 
-	public void setNumPerPage(int numPerPage) {
-		this.numPerPage = numPerPage;
-	}
+    public int getNumPerPage() {
+        return numPerPage;
+    }
 
-	public String getOrderField() {
-		return orderField;
-	}
+    public void setNumPerPage(int numPerPage) {
+        this.numPerPage = numPerPage;
+    }
 
-	public void setOrderField(String orderField) {
-		this.orderField = orderField;
-	}
+    public String getOrderField() {
+        return orderField;
+    }
 
-	public String getOrderDirection() {
-		return orderDirection;
-	}
+    public void setOrderField(String orderField) {
+        this.orderField = orderField;
+    }
 
-	public void setOrderDirection(String orderDirection) {
-		this.orderDirection = orderDirection;
-	}
+    public String getOrderDirection() {
+        return orderDirection;
+    }
 
-	@Override
-	public String toString() {
-		return "Page [list=" + list + ", totalCount=" + totalCount + ", totalPage=" + totalPage + ", currentPage=" + currentPage + ", numPerPage=" + numPerPage + ", orderField=" + orderField + ", orderDirection=" + orderDirection + "]";
-	}
+    public void setOrderDirection(String orderDirection) {
+        this.orderDirection = orderDirection;
+    }
+
+    @Override
+    public String toString() {
+        return "Page [list=" + list + ", totalCount=" + totalCount + ", totalPage=" + totalPage + ", currentPage=" + currentPage + ", numPerPage=" + numPerPage + ", orderField=" + orderField + ", orderDirection=" + orderDirection + "]";
+    }
 
 }

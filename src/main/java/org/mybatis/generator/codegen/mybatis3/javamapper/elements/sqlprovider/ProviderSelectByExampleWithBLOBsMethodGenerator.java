@@ -15,19 +15,16 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
-import java.util.List;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
+import java.util.List;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class ProviderSelectByExampleWithBLOBsMethodGenerator extends
-        ProviderSelectByExampleWithoutBLOBsMethodGenerator {
+public class ProviderSelectByExampleWithBLOBsMethodGenerator extends ProviderSelectByExampleWithoutBLOBsMethodGenerator {
 
     public ProviderSelectByExampleWithBLOBsMethodGenerator() {
         super();
@@ -40,12 +37,11 @@ public class ProviderSelectByExampleWithBLOBsMethodGenerator extends
 
     @Override
     public String getMethodName() {
-        return introspectedTable.getSelectByExampleWithBLOBsStatementId();        
+        return introspectedTable.getSelectByExampleWithBLOBsStatementId();
     }
 
     @Override
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins().providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass,
-                introspectedTable);
+        return context.getPlugins().providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 }

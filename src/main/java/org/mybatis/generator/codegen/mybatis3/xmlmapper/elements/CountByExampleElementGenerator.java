@@ -20,9 +20,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class CountByExampleElementGenerator extends AbstractXmlElementGenerator {
 
@@ -36,8 +34,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 
         String fqjt = introspectedTable.getExampleType();
 
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultType", "java.lang.Integer")); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -45,13 +42,11 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 
         StringBuilder sb = new StringBuilder();
         sb.append("select count(*) from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
         answer.addElement(getExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapCountByExampleElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

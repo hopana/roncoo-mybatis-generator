@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.api.dom.xml;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.mybatis.generator.api.dom.OutputUtilities;
 
 /**
  * @author Jeff Butler
@@ -31,7 +31,7 @@ public class XmlElement extends Element {
     private String name;
 
     /**
-     *  
+     *
      */
     public XmlElement(String name) {
         super();
@@ -39,11 +39,11 @@ public class XmlElement extends Element {
         elements = new ArrayList<Element>();
         this.name = name;
     }
-    
+
     /**
      * Copy constructor.  Not a truly deep copy, but close enough
      * for most purposes.
-     * 
+     *
      * @param original
      */
     public XmlElement(XmlElement original) {

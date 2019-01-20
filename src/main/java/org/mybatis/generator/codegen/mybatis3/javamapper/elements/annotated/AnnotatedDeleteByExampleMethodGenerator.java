@@ -21,11 +21,9 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 
 /**
- * 
  * @author Jeff Butler
  */
-public class AnnotatedDeleteByExampleMethodGenerator extends
-        DeleteByExampleMethodGenerator {
+public class AnnotatedDeleteByExampleMethodGenerator extends DeleteByExampleMethodGenerator {
 
     public AnnotatedDeleteByExampleMethodGenerator() {
         super();
@@ -41,7 +39,7 @@ public class AnnotatedDeleteByExampleMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getDeleteByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 }

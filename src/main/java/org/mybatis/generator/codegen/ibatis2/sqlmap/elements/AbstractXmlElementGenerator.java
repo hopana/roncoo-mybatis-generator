@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -24,10 +22,10 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     public abstract void addElements(XmlElement parentElement);
@@ -39,28 +37,21 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     /**
      * This method should return an XmlElement for the select key used to
      * automatically generate keys.
-     * 
-     * @param introspectedColumn
-     *            the column related to the select key statement
-     * @param generatedKey
-     *            the generated key for the current table
+     *
+     * @param introspectedColumn the column related to the select key statement
+     * @param generatedKey       the generated key for the current table
      * @return the selectKey element
      */
-    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn,
-            GeneratedKey generatedKey) {
-        String identityColumnType = introspectedColumn
-                .getFullyQualifiedJavaType().getFullyQualifiedName();
+    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn, GeneratedKey generatedKey) {
+        String identityColumnType = introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName();
 
         XmlElement answer = new XmlElement("selectKey"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultClass", identityColumnType)); //$NON-NLS-1$
-        answer.addAttribute(new Attribute(
-                "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
         if (stringHasValue(generatedKey.getType())) {
             answer.addAttribute(new Attribute("type", generatedKey.getType())); //$NON-NLS-1$  
         }
-        answer
-                .addElement(new TextElement(generatedKey
-                        .getRuntimeSqlStatement()));
+        answer.addElement(new TextElement(generatedKey.getRuntimeSqlStatement()));
 
         return answer;
     }
@@ -68,16 +59,14 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     protected XmlElement getBaseColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getIbatis2SqlMapNamespace()
-                        + "." + introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
+                introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
         return answer;
     }
 
     protected XmlElement getBlobColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getIbatis2SqlMapNamespace()
-                        + "." + introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
+                introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
         return answer;
     }
 }

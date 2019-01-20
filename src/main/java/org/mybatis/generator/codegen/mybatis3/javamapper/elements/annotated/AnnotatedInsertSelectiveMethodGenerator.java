@@ -22,11 +22,9 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertSelectiv
 import org.mybatis.generator.config.GeneratedKey;
 
 /**
- * 
  * @author Jeff Butler
  */
-public class AnnotatedInsertSelectiveMethodGenerator extends
-    InsertSelectiveMethodGenerator {
+public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMethodGenerator {
 
     public AnnotatedInsertSelectiveMethodGenerator() {
         super();
@@ -42,7 +40,7 @@ public class AnnotatedInsertSelectiveMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getInsertSelectiveStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();

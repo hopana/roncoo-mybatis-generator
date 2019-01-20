@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.api.dom;
 
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 /**
  * @author Jeff Butler
@@ -44,11 +44,9 @@ public class OutputUtilities {
     /**
      * Utility method that indents the buffer by the default amount for Java
      * (four spaces per indent level).
-     * 
-     * @param sb
-     *            a StringBuilder to append to
-     * @param indentLevel
-     *            the required indent level
+     *
+     * @param sb          a StringBuilder to append to
+     * @param indentLevel the required indent level
      */
     public static void javaIndent(StringBuilder sb, int indentLevel) {
         for (int i = 0; i < indentLevel; i++) {
@@ -59,11 +57,9 @@ public class OutputUtilities {
     /**
      * Utility method that indents the buffer by the default amount for XML (two
      * spaces per indent level).
-     * 
-     * @param sb
-     *            a StringBuilder to append to
-     * @param indentLevel
-     *            the required indent level
+     *
+     * @param sb          a StringBuilder to append to
+     * @param indentLevel the required indent level
      */
     public static void xmlIndent(StringBuilder sb, int indentLevel) {
         for (int i = 0; i < indentLevel; i++) {
@@ -73,9 +69,8 @@ public class OutputUtilities {
 
     /**
      * Utility method. Adds a newline character to a StringBuilder.
-     * 
-     * @param sb
-     *            the StringBuilder to be appended to
+     *
+     * @param sb the StringBuilder to be appended to
      */
     public static void newLine(StringBuilder sb) {
         sb.append(lineSeparator);
@@ -83,12 +78,11 @@ public class OutputUtilities {
 
     /**
      * returns a unique set of "import xxx;" Strings for the set of types
-     * 
+     *
      * @param importedTypes
      * @return
      */
-    public static Set<String> calculateImports(
-            Set<FullyQualifiedJavaType> importedTypes) {
+    public static Set<String> calculateImports(Set<FullyQualifiedJavaType> importedTypes) {
         StringBuilder sb = new StringBuilder();
         Set<String> importStrings = new TreeSet<String>();
         for (FullyQualifiedJavaType fqjt : importedTypes) {

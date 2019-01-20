@@ -17,7 +17,7 @@ package org.mybatis.generator.internal.db;
 
 /**
  * Typesafe enum of known database dialects
- * 
+ *
  * @author Jeff Butler
  */
 public enum DatabaseDialects {
@@ -35,7 +35,7 @@ public enum DatabaseDialects {
     private String identityRetrievalStatement;
 
     /**
-     *  
+     *
      */
     private DatabaseDialects(String identityRetrievalStatement) {
         this.identityRetrievalStatement = identityRetrievalStatement;
@@ -46,10 +46,9 @@ public enum DatabaseDialects {
     }
 
     /**
-     * 
      * @param database
      * @return the database dialect for the selected database. May return null
-     *         if there is no known dialect for the selected db
+     * if there is no known dialect for the selected db
      */
     public static DatabaseDialects getDatabaseDialect(String database) {
         DatabaseDialects returnValue = null;
@@ -75,5 +74,4 @@ public enum DatabaseDialects {
         }
 
         return returnValue;
-    }
-}
+    }}

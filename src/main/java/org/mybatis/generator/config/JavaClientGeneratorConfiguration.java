@@ -15,13 +15,13 @@
  */
 package org.mybatis.generator.config;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * @author Jeff Butler
@@ -32,7 +32,7 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     private String targetProject;
 
     /**
-     *  
+     *
      */
     public JavaClientGeneratorConfiguration() {
         super();
@@ -69,8 +69,7 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
         }
 
         if (implementationPackage != null) {
-            answer.addAttribute(new Attribute(
-                    "implementationPackage", targetProject)); //$NON-NLS-1$
+            answer.addAttribute(new Attribute("implementationPackage", targetProject)); //$NON-NLS-1$
         }
 
         addPropertyXmlElements(answer);

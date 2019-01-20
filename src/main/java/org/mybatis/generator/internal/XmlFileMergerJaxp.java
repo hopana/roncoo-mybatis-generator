@@ -15,38 +15,26 @@
  */
 package org.mybatis.generator.internal;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
+import org.w3c.dom.*;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 /**
  * This class handles the task of merging changes into an existing XML file.
- * 
+ *
  * @author Jeff Butler
  */
 public class XmlFileMergerJaxp {
@@ -56,8 +44,7 @@ public class XmlFileMergerJaxp {
          * attempt to read a DTD. We don't need that support for the merge and
          * it can cause problems on systems that aren't Internet connected.
          */
-        public InputSource resolveEntity(String publicId, String systemId)
-                throws SAXException, IOException {
+        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
 
             StringReader sr = new StringReader(""); //$NON-NLS-1$
 
@@ -72,13 +59,11 @@ public class XmlFileMergerJaxp {
         super();
     }
 
-    public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
-            File existingFile) throws ShellException {
+    public static String getMergedSource(GeneratedXmlFile generatedXmlFile, File existingFile) throws ShellException {
 
         try {
-            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
-                existingFile.getName());
+            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())), new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
+                    existingFile.getName());
         } catch (IOException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$
                     existingFile.getName()), e);
@@ -90,13 +75,10 @@ public class XmlFileMergerJaxp {
                     existingFile.getName()), e);
         }
     }
-    
-    public static String getMergedSource(InputSource newFile,
-            InputSource existingFile, String existingFileName) throws IOException, SAXException,
-            ParserConfigurationException, ShellException {
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory
-                .newInstance();
+    public static String getMergedSource(InputSource newFile, InputSource existingFile, String existingFileName) throws IOException, SAXException, ParserConfigurationException, ShellException {
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setExpandEntityReferences(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new NullEntityResolver());
@@ -132,8 +114,7 @@ public class XmlFileMergerJaxp {
         attributeCount = attributes.getLength();
         for (int i = 0; i < attributeCount; i++) {
             Node node = attributes.item(i);
-            existingRootElement.setAttribute(node.getNodeName(), node
-                    .getNodeValue());
+            existingRootElement.setAttribute(node.getNodeName(), node.getNodeValue());
         }
 
         // remove the old generated elements and any
@@ -145,8 +126,7 @@ public class XmlFileMergerJaxp {
             Node node = children.item(i);
             if (isGeneratedNode(node)) {
                 nodesToDelete.add(node);
-            } else if (isWhiteSpace(node)
-                    && isGeneratedNode(children.item(i + 1))) {
+            } else if (isWhiteSpace(node) && isGeneratedNode(children.item(i + 1))) {
                 nodesToDelete.add(node);
             }
         }

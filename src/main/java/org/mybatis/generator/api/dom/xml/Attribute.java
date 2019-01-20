@@ -23,7 +23,7 @@ public class Attribute {
     private String value;
 
     /**
-     * 
+     *
      */
     public Attribute(String name, String value) {
         super();

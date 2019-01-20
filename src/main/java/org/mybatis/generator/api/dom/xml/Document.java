@@ -28,7 +28,7 @@ public class Document {
     private XmlElement rootElement;
 
     /**
-     *  
+     *
      */
     public Document(String publicId, String systemId) {
         super();
@@ -48,8 +48,7 @@ public class Document {
     }
 
     /**
-     * @param rootElement
-     *            The rootElement to set.
+     * @param rootElement The rootElement to set.
      */
     public void setRootElement(XmlElement rootElement) {
         this.rootElement = rootElement;

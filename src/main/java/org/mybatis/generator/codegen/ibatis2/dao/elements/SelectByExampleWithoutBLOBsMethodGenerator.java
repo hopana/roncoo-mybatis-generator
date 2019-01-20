@@ -15,25 +15,17 @@
  */
 package org.mybatis.generator.codegen.ibatis2.dao.elements;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.api.dom.java.*;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class SelectByExampleWithoutBLOBsMethodGenerator extends
-        AbstractDAOElementGenerator {
+public class SelectByExampleWithoutBLOBsMethodGenerator extends AbstractDAOElementGenerator {
 
     private boolean generateForJava5;
 
@@ -54,15 +46,11 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
         StringBuilder sb = new StringBuilder();
         sb.append(method.getReturnType().getShortName());
         sb.append(" list = "); //$NON-NLS-1$
-        sb.append(daoTemplate.getQueryForListMethod(introspectedTable
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getSelectByExampleStatementId(), "example")); //$NON-NLS-1$
+        sb.append(daoTemplate.getQueryForListMethod(introspectedTable.getIbatis2SqlMapNamespace(), introspectedTable.getSelectByExampleStatementId(), "example")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
         method.addBodyLine("return list;"); //$NON-NLS-1$
 
-        if (context.getPlugins()
-                .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
-                        topLevelClass, introspectedTable)) {
+        if (context.getPlugins().clientSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
@@ -74,9 +62,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
             Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
             Method method = getMethodShell(importedTypes);
 
-            if (context.getPlugins()
-                    .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
-                            interfaze, introspectedTable)) {
+            if (context.getPlugins().clientSelectByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);
             }
@@ -84,25 +70,21 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
     }
 
     private Method getMethodShell(Set<FullyQualifiedJavaType> importedTypes) {
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getExampleType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(type);
         importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 
         Method method = new Method();
         method.setVisibility(getExampleMethodVisibility());
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
-                .getNewListInstance();
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         ;
         if (generateForJava5) {
             FullyQualifiedJavaType fqjt;
             if (introspectedTable.getRules().generateBaseRecordClass()) {
-                fqjt = new FullyQualifiedJavaType(introspectedTable
-                        .getBaseRecordType());
+                fqjt = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
             } else if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-                fqjt = new FullyQualifiedJavaType(introspectedTable
-                        .getPrimaryKeyType());
+                fqjt = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
             } else {
                 throw new RuntimeException(getString("RuntimeError.12")); //$NON-NLS-1$
             }
@@ -113,8 +95,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
 
         method.setReturnType(returnType);
 
-        method.setName(getDAOMethodNameCalculator()
-                .getSelectByExampleWithoutBLOBsMethodName(introspectedTable));
+        method.setName(getDAOMethodNameCalculator().getSelectByExampleWithoutBLOBsMethodName(introspectedTable));
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
 
         for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {
@@ -122,8 +103,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
             importedTypes.add(fqjt);
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         return method;
     }

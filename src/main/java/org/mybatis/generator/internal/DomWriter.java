@@ -16,30 +16,20 @@
 
 package org.mybatis.generator.internal;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.exception.ShellException;
+import org.w3c.dom.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
-import org.mybatis.generator.exception.ShellException;
-import org.w3c.dom.Attr;
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.EntityReference;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.ProcessingInstruction;
-import org.w3c.dom.Text;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * This class is used to generate a String representation of an XML document. It
  * is very much based on the class dom.Writer from the Apache Xerces examples,
  * but I've simplified and updated it.
- * 
+ *
  * @author Andy Clark, IBM (Original work)
  * @author Jeff Butler (derivation)
  */
@@ -52,8 +42,7 @@ public class DomWriter {
         super();
     }
 
-    public synchronized String toString(Document document)
-            throws ShellException {
+    public synchronized String toString(Document document) throws ShellException {
         StringWriter sw = new StringWriter();
         printWriter = new PrintWriter(sw);
         write(document);
@@ -61,7 +50,9 @@ public class DomWriter {
         return s;
     }
 
-    /** Returns a sorted list of attributes. */
+    /**
+     * Returns a sorted list of attributes.
+     */
     protected Attr[] sortAttributes(NamedNodeMap attrs) {
 
         int len = (attrs != null) ? attrs.getLength() : 0;
@@ -90,7 +81,9 @@ public class DomWriter {
 
     }
 
-    /** Normalizes and prints the given string. */
+    /**
+     * Normalizes and prints the given string.
+     */
     protected void normalizeAndPrint(String s, boolean isAttValue) {
 
         int len = (s != null) ? s.length() : 0;
@@ -101,66 +94,67 @@ public class DomWriter {
 
     }
 
-    /** Normalizes and print the given character. */
+    /**
+     * Normalizes and print the given character.
+     */
     protected void normalizeAndPrint(char c, boolean isAttValue) {
 
         switch (c) {
-        case '<': {
-            printWriter.print("&lt;"); //$NON-NLS-1$
-            break;
-        }
-        case '>': {
-            printWriter.print("&gt;"); //$NON-NLS-1$
-            break;
-        }
-        case '&': {
-            printWriter.print("&amp;"); //$NON-NLS-1$
-            break;
-        }
-        case '"': {
-            // A '"' that appears in character data
-            // does not need to be escaped.
-            if (isAttValue) {
-                printWriter.print("&quot;"); //$NON-NLS-1$
-            } else {
-                printWriter.print('"');
+            case '<': {
+                printWriter.print("&lt;"); //$NON-NLS-1$
+                break;
             }
-            break;
-        }
-        case '\r': {
-            // If CR is part of the document's content, it
-            // must not be printed as a literal otherwise
-            // it would be normalized to LF when the document
-            // is reparsed.
-            printWriter.print("&#xD;"); //$NON-NLS-1$
-            break;
-        }
-        default: {
-            // In XML 1.1, control chars in the ranges [#x1-#x1F, #x7F-#x9F]
-            // must be escaped.
-            //
-            // Escape space characters that would be normalized to #x20 in
-            // attribute values
-            // when the document is reparsed.
-            //
-            // Escape NEL (0x85) and LSEP (0x2028) that appear in content
-            // if the document is XML 1.1, since they would be normalized to LF
-            // when the document is reparsed.
-            if (isXML11
-                    && ((c >= 0x01 && c <= 0x1F && c != 0x09 && c != 0x0A)
-                            || (c >= 0x7F && c <= 0x9F) || c == 0x2028)
-                    || isAttValue && (c == 0x09 || c == 0x0A)) {
-                printWriter.print("&#x"); //$NON-NLS-1$
-                printWriter.print(Integer.toHexString(c).toUpperCase());
-                printWriter.print(';');
-            } else {
-                printWriter.print(c);
+            case '>': {
+                printWriter.print("&gt;"); //$NON-NLS-1$
+                break;
             }
-        }
+            case '&': {
+                printWriter.print("&amp;"); //$NON-NLS-1$
+                break;
+            }
+            case '"': {
+                // A '"' that appears in character data
+                // does not need to be escaped.
+                if (isAttValue) {
+                    printWriter.print("&quot;"); //$NON-NLS-1$
+                } else {
+                    printWriter.print('"');
+                }
+                break;
+            }
+            case '\r': {
+                // If CR is part of the document's content, it
+                // must not be printed as a literal otherwise
+                // it would be normalized to LF when the document
+                // is reparsed.
+                printWriter.print("&#xD;"); //$NON-NLS-1$
+                break;
+            }
+            default: {
+                // In XML 1.1, control chars in the ranges [#x1-#x1F, #x7F-#x9F]
+                // must be escaped.
+                //
+                // Escape space characters that would be normalized to #x20 in
+                // attribute values
+                // when the document is reparsed.
+                //
+                // Escape NEL (0x85) and LSEP (0x2028) that appear in content
+                // if the document is XML 1.1, since they would be normalized to LF
+                // when the document is reparsed.
+                if (isXML11 && ((c >= 0x01 && c <= 0x1F && c != 0x09 && c != 0x0A) || (c >= 0x7F && c <= 0x9F) || c == 0x2028) || isAttValue && (c == 0x09 || c == 0x0A)) {
+                    printWriter.print("&#x"); //$NON-NLS-1$
+                    printWriter.print(Integer.toHexString(c).toUpperCase());
+                    printWriter.print(';');
+                } else {
+                    printWriter.print(c);
+                }
+            }
         }
     }
 
-    /** Extracts the XML version from the Document. */
+    /**
+     * Extracts the XML version from the Document.
+     */
     protected String getVersion(Document document) {
         if (document == null) {
             return null;
@@ -169,11 +163,10 @@ public class DomWriter {
         Method getXMLVersion = null;
         try {
             getXMLVersion = document.getClass().getMethod("getXmlVersion", //$NON-NLS-1$
-                    new Class[] {});
+                    new Class[]{});
             // If Document class implements DOM L3, this method will exist.
             if (getXMLVersion != null) {
-                version = (String) getXMLVersion.invoke(document,
-                        (Object[]) null);
+                version = (String) getXMLVersion.invoke(document, (Object[]) null);
             }
         } catch (Exception e) {
             // Either this locator object doesn't have
@@ -190,41 +183,40 @@ public class DomWriter {
 
         short type = node.getNodeType();
         switch (type) {
-        case Node.DOCUMENT_NODE:
-            write((Document) node);
-            break;
+            case Node.DOCUMENT_NODE:
+                write((Document) node);
+                break;
 
-        case Node.DOCUMENT_TYPE_NODE:
-            write((DocumentType) node);
-            break;
+            case Node.DOCUMENT_TYPE_NODE:
+                write((DocumentType) node);
+                break;
 
-        case Node.ELEMENT_NODE:
-            write((Element) node);
-            break;
+            case Node.ELEMENT_NODE:
+                write((Element) node);
+                break;
 
-        case Node.ENTITY_REFERENCE_NODE:
-            write((EntityReference) node);
-            break;
+            case Node.ENTITY_REFERENCE_NODE:
+                write((EntityReference) node);
+                break;
 
-        case Node.CDATA_SECTION_NODE:
-            write((CDATASection) node);
-            break;
+            case Node.CDATA_SECTION_NODE:
+                write((CDATASection) node);
+                break;
 
-        case Node.TEXT_NODE:
-            write((Text) node);
-            break;
+            case Node.TEXT_NODE:
+                write((Text) node);
+                break;
 
-        case Node.PROCESSING_INSTRUCTION_NODE:
-            write((ProcessingInstruction) node);
-            break;
+            case Node.PROCESSING_INSTRUCTION_NODE:
+                write((ProcessingInstruction) node);
+                break;
 
-        case Node.COMMENT_NODE:
-            write((Comment) node);
-            break;
+            case Node.COMMENT_NODE:
+                write((Comment) node);
+                break;
 
-        default:
-            throw new ShellException(getString(
-                    "RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
+            default:
+                throw new ShellException(getString("RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
         }
     }
 

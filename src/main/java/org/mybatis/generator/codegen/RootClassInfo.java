@@ -15,7 +15,8 @@
  */
 package org.mybatis.generator.codegen;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.internal.ObjectFactory;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -25,25 +26,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.internal.ObjectFactory;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class RootClassInfo {
 
     private static Map<String, RootClassInfo> rootClassInfoMap;
 
     static {
-        rootClassInfoMap = Collections
-                .synchronizedMap(new HashMap<String, RootClassInfo>());
+        rootClassInfoMap = Collections.synchronizedMap(new HashMap<String, RootClassInfo>());
     }
 
-    public static RootClassInfo getInstance(String className,
-            List<String> warnings) {
+    public static RootClassInfo getInstance(String className, List<String> warnings) {
         RootClassInfo classInfo = rootClassInfoMap.get(className);
         if (classInfo == null) {
             classInfo = new RootClassInfo(className, warnings);
@@ -83,8 +79,7 @@ public class RootClassInfo {
 
         boolean found = false;
         String propertyName = introspectedColumn.getJavaProperty();
-        String propertyType = introspectedColumn.getFullyQualifiedJavaType()
-                .getFullyQualifiedName();
+        String propertyType = introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName();
 
         // get method names from class and check against this column definition.
         // better yet, have a map of method Names. check against it.
@@ -95,8 +90,7 @@ public class RootClassInfo {
                 // property is in the rootClass...
 
                 // Is it the proper type?
-                if (!propertyDescriptor.getPropertyType().getName().equals(
-                        propertyType)) {
+                if (!propertyDescriptor.getPropertyType().getName().equals(propertyType)) {
                     warnings.add(getString("Warning.21", //$NON-NLS-1$
                             propertyName, className, propertyType));
                     break;

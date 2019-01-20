@@ -15,25 +15,17 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import static org.mybatis.generator.api.dom.OutputUtilities.*;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 /**
  * @author Jeff Butler
  */
 public class Interface extends JavaElement implements CompilationUnit {
     private Set<FullyQualifiedJavaType> importedTypes;
-    
+
     private Set<String> staticImports;
 
     private FullyQualifiedJavaType type;
@@ -45,7 +37,7 @@ public class Interface extends JavaElement implements CompilationUnit {
     private List<String> fileCommentLines;
 
     /**
-     *  
+     *
      */
     public Interface(FullyQualifiedJavaType type) {
         super();
@@ -66,8 +58,7 @@ public class Interface extends JavaElement implements CompilationUnit {
     }
 
     public void addImportedType(FullyQualifiedJavaType importedType) {
-        if (importedType.isExplicitlyImported()
-                && !importedType.getPackageName().equals(type.getPackageName())) {
+        if (importedType.isExplicitlyImported() && !importedType.getPackageName().equals(type.getPackageName())) {
             importedTypes.add(importedType);
         }
     }
@@ -94,11 +85,11 @@ public class Interface extends JavaElement implements CompilationUnit {
             sb.append(';');
             newLine(sb);
         }
-        
+
         if (staticImports.size() > 0) {
             newLine(sb);
         }
-        
+
         Set<String> importStrings = calculateImports(importedTypes);
         for (String importString : importStrings) {
             sb.append(importString);

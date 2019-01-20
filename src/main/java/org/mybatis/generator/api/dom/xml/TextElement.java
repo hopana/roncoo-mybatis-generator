@@ -24,7 +24,7 @@ public class TextElement extends Element {
     private String content;
 
     /**
-     *  
+     *
      */
     public TextElement(String content) {
         super();

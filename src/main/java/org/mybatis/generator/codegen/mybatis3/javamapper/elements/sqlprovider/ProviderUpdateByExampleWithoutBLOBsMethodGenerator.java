@@ -15,28 +15,21 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getAliasedEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.*;
 
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getAliasedEscapedColumnName;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
-public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     public ProviderUpdateByExampleWithoutBLOBsMethodGenerator() {
         super();
@@ -53,60 +46,56 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
 
         importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
-        
+
         Method method = new Method(getMethodName());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
-        
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("BEGIN();"); //$NON-NLS-1$
-        
+
         method.addBodyLine(String.format("UPDATE(\"%s\");", //$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         for (IntrospectedColumn introspectedColumn : getColumns()) {
             StringBuilder sb = new StringBuilder();
             sb.append(getParameterClause(introspectedColumn));
             sb.insert(2, "record."); //$NON-NLS-1$
-            
+
             method.addBodyLine(String.format("SET(\"%s = %s\");", //$NON-NLS-1$
-                    escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
-                    sb.toString()));
+                    escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)), sb.toString()));
         }
-        
+
         method.addBodyLine(""); //$NON-NLS-1$
-        
-        FullyQualifiedJavaType example =
-            new FullyQualifiedJavaType(introspectedTable.getExampleType());
+
+        FullyQualifiedJavaType example = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
-        
+
         method.addBodyLine("applyWhere(example, true);"); //$NON-NLS-1$
         method.addBodyLine("return SQL();"); //$NON-NLS-1$
-        
+
         if (callPlugins(method, topLevelClass)) {
             topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
     }
-    
+
     public String getMethodName() {
-        return introspectedTable.getUpdateByExampleStatementId();        
+        return introspectedTable.getUpdateByExampleStatementId();
     }
-    
+
     public List<IntrospectedColumn> getColumns() {
         return introspectedTable.getNonBLOBColumns();
     }
-    
+
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins().providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass,
-                introspectedTable);
+        return context.getPlugins().providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 }
